@@ -190,4 +190,4 @@
 - CPU_MEM_RATIO_{i} = CPU_USAGE_{i} / MEM_USAGE_{i}
 - MEM_DISK_RATIO_{i} = MEM_USAGE_{i} / DISK_USAGE_{i}
 
-而且在模型训练后，我还打印特征重要性，发现：USED_CPU_MEM_RATIO_{i}特征重要性很高，但分数没有明显涨点。因此后续可以暂时把CPU_MEM_RATIO_{i}和MEM_DISK_RATIO_{i}删去加入模型中看看。预测不会涨分，但会减少不必要的冗余比值特征，还增加了模型的通用性。
+在模型训练后，我还打印特征重要性，发现：USED_CPU_MEM_RATIO_{i}特征重要性很高，但分数没有明显涨点。因此后续可以暂时把CPU_MEM_RATIO_{i}和MEM_DISK_RATIO_{i}删去加入模型中看看。预计不会给A榜分数带来正收益，但会减少不必要的冗余比值特征，还增加了模型的通用性，可能有利于B榜。
