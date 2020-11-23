@@ -259,3 +259,18 @@
 |25|TimeSeriesSplit|70.92/3.38|0.09767|2020.11.23|v25|
 
 **总结**：[Kaggle M5 沃尔玛销量时间序列预测 竞赛总结](https://zhuanlan.zhihu.com/p/268309957)提到“一般的tabular data是通过随机划分的办法划分训练集、验证集和测试集。但对于时序数据来说。这样的做法会导致“时间穿越”问题，“时间穿越”本质上是一种data leakage，会导致严重的过拟合问题。因此必须根据时间顺序来划分训练/验证/测试集。”，基于此，采用了imeSeriesSplit的划分数据集，但结果并不好，原因可能是测试集并不是单纯取自与训练集后的数据，因此这种划分方式没有给模型带来提升。
+
+3. 实验26主要是**统一了训练集和测试集，且增加特征TO_RUN_JOBS，设置反过拟合参数**:
+
+
+|编号|预处理手段|线下表现(MSE/测评分数)|线上分数|提交时间|数据版本|
+|:--:|:--:|:--:|:--:|:--:|--:|
+|19|实验19|37.10/2.28|0.31658|2020.11.22|v19|
+|26|统一了训练集和测试集，且增加特征TO_RUN_JOBS，设置反过拟合参数|38.64/2.39|**0.31916**|2020.11.23|v26|
+
+**总结**：[CCF工作负载预测Baseline-CNN-LSTM](https://zhuanlan.zhihu.com/p/301092469)中有两个操作我们没做：
+
+- 删除掉训练集数据中不存在的测试集类别的样本（即STATUS，PLATFORM，RESOURCE_TYPE，例如train = train[train.STATUS == 'available']），避免训练和测试数据的分布不一致。
+- 第二步增加特征：train['to_run_jobs'] = train['LAUNCHING_JOB_NUMS'] - train['RUNNING_JOB_NUMS']。
+
+除了以上这两步，我还发现历史实验有过拟合线性，所以我就加了'early_stopping_rounds':10,'n_estimators':10000,'subsample':0.8,'feature_fraction':0.75,'bagging_fraction': 0.75,'reg_lambda': 10这些参数，然后实验表现得到了提升。
