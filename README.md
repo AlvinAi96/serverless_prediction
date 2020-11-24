@@ -273,7 +273,7 @@
 - 删除掉训练集数据中不存在的测试集类别的样本（即STATUS，PLATFORM，RESOURCE_TYPE，例如train = train[train.STATUS == 'available']），避免训练和测试数据的分布不一致。
 - 第二步增加特征：train['to_run_jobs'] = train['LAUNCHING_JOB_NUMS'] - train['RUNNING_JOB_NUMS']。
 
-除了以上这两步，我还发现历史实验有过拟合线性，所以我就加了'early_stopping_rounds':10,'n_estimators':10000,'subsample':0.8,'feature_fraction':0.75,'bagging_fraction': 0.75,'reg_lambda': 10这些参数，然后实验表现得到了提升。
+除了以上这两步，我还发现历史实验有过拟合线性，所以我就加了'early_stopping_rounds':10,'subsample':0.8,'feature_fraction':0.75,'bagging_fraction': 0.75,'reg_lambda': 10这些参数，然后实验表现得到了提升。
 
 ### 2020.11.24
 1. 实验27主要是**单队列缺失值预测模型**：
@@ -281,3 +281,5 @@
 |编号|预处理手段|线下表现(MSE/测评分数)|线上分数|提交时间|数据版本|
 |:--:|:--:|:--:|:--:|:--:|--:|
 |27|在实验19上针对单队列预测disk|36.92/2.27|0.31246|2020.11.24|v27|
+
+**总结**：由于PLATFORM非vm的样本都缺失了disk，所以当我们跟实验26采用过滤样本的预处理方式，会过滤掉所有缺失disk的样本，因此，在这里为缺失disk样本做缺失值预测模型并没有很大的实用价值。但训练缺失值模型是个很好的实践，能为之后比赛奠定基础。
