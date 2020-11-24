@@ -274,3 +274,10 @@
 - 第二步增加特征：train['to_run_jobs'] = train['LAUNCHING_JOB_NUMS'] - train['RUNNING_JOB_NUMS']。
 
 除了以上这两步，我还发现历史实验有过拟合线性，所以我就加了'early_stopping_rounds':10,'n_estimators':10000,'subsample':0.8,'feature_fraction':0.75,'bagging_fraction': 0.75,'reg_lambda': 10这些参数，然后实验表现得到了提升。
+
+### 2020.11.24
+1. 实验27主要是**单队列缺失值预测模型**：
+
+|编号|预处理手段|线下表现(MSE/测评分数)|线上分数|提交时间|数据版本|
+|:--:|:--:|:--:|:--:|:--:|--:|
+|27|在实验19上针对单队列预测disk|36.92/2.27|0.31246|2020.11.24|v27|
